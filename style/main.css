@@ -1,0 +1,8 @@
+body {
+    background-color: #1D2024;
+}
+
+.site-header {
+    background-color: #212529;
+    box-shadow: 3rem .5em 1.5em rgba(0, 0, 0, .1);
+}
