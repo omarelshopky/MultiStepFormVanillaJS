@@ -1,1 +1,25 @@
-step 1
+<div class="form-subheading fs-2 mb-4">
+    <span class="form-subheading__step-number fw-bold text-primary">
+        Step One
+    </span>
+    <span class="form-subheading__step-name">
+        Product Specs:
+    </span>
+</div>
+
+<div class="form-inputs">
+    <div class="mb-3">
+        <label for="height" class="form-label fs-5">Height</label>
+        <div class="input-group">
+            <input type="number" class="form-control" id="height">
+            <span class="input-group-text">cm</span>
+        </div>
+        <span class="form-text text-danger form-input-error__height">test</span>
+    </div>
+
+    <div class="mb-3">
+        <label for="drawers" class="form-label fs-5">Drawers</label>
+        <input type="number" min="1" max="8" value="2" class="form-control" id="drawers">
+        <span class="form-text text-danger form-input-error__drawers">test</span>
+    </div>
+</div>

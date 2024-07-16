@@ -11,3 +11,24 @@ body {
 .nav-item {
     cursor: pointer;
 }
+
+.quotation-form {
+    width: 50%;
+
+    @media only screen and (max-width: 880px) {
+        width: 100%;
+    }
+}
+
+.form-button {
+    width: 30%;
+
+    @media only screen and (max-width: 880px) {
+        width: 100%;
+    }
+}
+
+.form-text {
+    display: inline-block;
+    line-height: 1rem;
+}
