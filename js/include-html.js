@@ -1,13 +1,13 @@
 "use strict";
 
 
-const RECURSIVE_COUNT = 2;
+const RECURSIVE_COUNT = 1;
 
 
 const includeHTML = async (recursiveCount = RECURSIVE_COUNT) => {
     const elements = document.querySelectorAll(`[${INCLUDE_HTML_ATTRIBUTE}]`);
 
-    const fetchHTML = async (element) => {
+    await Promise.all(Array.from(elements).map(async (element) => {
         const file = element.getAttribute(INCLUDE_HTML_ATTRIBUTE);
 
         if (file) {
@@ -20,16 +20,14 @@ const includeHTML = async (recursiveCount = RECURSIVE_COUNT) => {
 
                 element.innerHTML = await response.text();
                 element.removeAttribute(INCLUDE_HTML_ATTRIBUTE);
-
-                if (recursiveCount > 0) {
-                    await includeHTML(recursiveCount - 1);
-                }
             } catch (error) {
                 element.innerHTML = "Page not found.";
                 // console.error('There was a problem with the fetch operation:', error);
             }
         }
-    }
+    }));
 
-    await Promise.all(Array.from(elements).map(fetchHTML));
+    if (recursiveCount > 0) {
+        await includeHTML(recursiveCount - 1);
+    }
 }
