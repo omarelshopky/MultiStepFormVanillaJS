@@ -2,30 +2,6 @@
 
 
 /**
- * Constants
- */
-const QUOTATION_FORM_STEPS_COUNT = 5;
-const QUOTATION_FORM_STEPS = [
-    [
-        {
-            "name" : "height",
-            "type" : "float",
-            "min"  : 40,
-            "max"  : 400
-        },
-        {
-            "name" : "drawers",
-            "type" : "integer",
-            "min"  : 1,
-            "max"  : 8
-        },
-    ],
-    [
-
-    ]
-]
-
-/**
  * Variables
  */
 const quotationData = {};
@@ -40,14 +16,14 @@ let formButton = document.querySelector(".form-button");
 const attachValidationEvents = () => {
     switch (currentStep) {
         case 1:
+        case 2:
+        case 3:
             QUOTATION_FORM_STEPS[currentStep - 1].forEach(formInputData => {
                 const formInput = quotationForm[formInputData.name].input;
-                formInput.addEventListener("keyup", () => __validateInput(formInput.value, formInputData));
+                formInput.addEventListener([2, 3].includes(currentStep) ? "change" : "keyup", () =>
+                    __validateInput(formInput.value, formInputData)
+                );
             });
-            break;
-        case 2:
-            break;
-        case 3:
             break;
         case 4:
             break;
@@ -91,21 +67,10 @@ const __getNextStep = async () => {
     await includeHTML();
     getQuotationFormInput();
     attachValidationEvents();
-}
+    __toggleFormButton();
 
-const __validateForm = () => {
-    switch (currentStep) {
-        case 1:
-            QUOTATION_FORM_STEPS[currentStep - 1].forEach(formInputData => {
-                __validateInput(quotationForm[formInputData.name].input.value, formInputData);
-            });
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
+    if (currentStep === 2) {
+        __insertFinishingOptions();
     }
 }
 
@@ -123,6 +88,8 @@ const __validateInput = (value, data) => {
             return __validateFloatInput(name, value, min, max);
         case "integer":
             return __validateIntegerInput(name, value, min, max);
+        case "select":
+            return __validateSelectInput(name, value);
     }
 }
 
@@ -178,8 +145,29 @@ const __validateFloatInput = (name, value, min, max) => {
     return true;
 }
 
+const __validateSelectInput = (name, value) => {
+    if (!value) {
+        __setInputError(name, "Please select a type.");
+        __toggleFormButton();
+
+        return false;
+    }
+
+    quotationForm[name].valid = true;
+    __setInputError(name, "");
+    __toggleFormButton();
+    __setTypePrice(FINISHING_TYPES[value], `input-group-text__${name}-price`);
+
+    return true;
+}
+
 const __setInputError = (name, error) => {
     quotationForm[name].inputError.innerHTML = error;
+}
+
+const __setTypePrice = (typeData, typePriceClass) => {
+    const typePriceElement = document.querySelector(`.${typePriceClass}`);
+    typePriceElement.innerHTML = typeData.price;
 }
 
 const __toggleFormButton = () => {
@@ -193,6 +181,20 @@ const __checkFormInputsValidation = () => {
     Object.keys(quotationForm).forEach(formInputName => {
         validForm &= quotationForm[formInputName].valid;
     });
+}
+
+const __insertFinishingOptions = () => {
+    const selectElements = document.querySelectorAll(".form-input__finishing-type");
+
+    selectElements.forEach(selectElement => {
+        Object.keys(FINISHING_TYPES).forEach(finishingTypeKey => {
+            const optionElement = document.createElement("option");
+            optionElement.innerHTML = FINISHING_TYPES[finishingTypeKey].label;
+            optionElement.value = FINISHING_TYPES[finishingTypeKey].value;
+
+            selectElement.appendChild(optionElement);
+        });
+    })
 }
 
 /**
