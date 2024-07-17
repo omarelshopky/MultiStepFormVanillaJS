@@ -1,5 +1,6 @@
 "use strict";
 
+
 /**
  * Constants
  */
@@ -12,6 +13,15 @@ const ROUTES = {
     "view" : "view-quotation.html"
 };
 const DEFAULT_ROUTE = "send";
+
+/**
+ * Variables
+ */
+let quotationData = {};
+let quotationForm = {};
+let currentStep = 1;
+let validForm = false;
+let formButton = null;
 
 
 document.addEventListener("DOMContentLoaded", async () => {

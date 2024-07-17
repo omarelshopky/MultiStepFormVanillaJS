@@ -4,11 +4,11 @@
 /**
  * Variables
  */
-const quotationData = {};
-let quotationForm = {};
-let currentStep = 1;
-let validForm = false;
-let formButton = document.querySelector(".form-button");
+quotationData = {};
+quotationForm = {};
+currentStep = 1;
+validForm = false;
+formButton = document.querySelector(".form-button");
 
 /**
  * Functions
@@ -74,6 +74,10 @@ const __getNextStep = async () => {
         __insertAccessoryOptions();
         const addAccessoryButton = document.querySelector(".add-accessory-button");
         addAccessoryButton.addEventListener("click", __addAccessorySelectElement);
+    }
+
+    if (currentStep === 5) {
+        formButton.innerHTML = "Send to Customer";
     }
 }
 
@@ -261,7 +265,7 @@ const __addAccessorySelectElement = () => {
 
     if (accessorySelectIndex >= ACCESSORIES_MAX_COUNT) {
         const addAccessoryButton = document.querySelector(".add-accessory-button");
-        addAccessoryButton.classList.add("d-none")
+        addAccessoryButton.classList.add("d-none");
     }
 }
 
