@@ -72,6 +72,8 @@ const __getNextStep = async () => {
 
     if (currentStep === 3) {
         __insertAccessoryOptions();
+        const addAccessoryButton = document.querySelector(".add-accessory-button");
+        addAccessoryButton.addEventListener("click", __addAccessorySelectElement);
     }
 }
 
@@ -216,6 +218,50 @@ const __insertSelectOptions = (selectElementClass, optionsData) => {
         // Reset the selected option
         selectElement.value = selectedOption;
     });
+}
+
+const __addAccessorySelectElement = () => {
+    const accessorySelectIndex = Object.keys(quotationForm).length + 1;
+
+    const accessorySelectWrapperBluePrint = document.querySelector(".form-input__accessory-1");
+    const accessorySelectWrapper = accessorySelectWrapperBluePrint.parentElement.parentElement.cloneNode(true);
+
+    const accessorySelectElement = accessorySelectWrapper.querySelector("select");
+    accessorySelectElement.value = "";
+    accessorySelectElement.classList.remove("form-input__accessory-1");
+    accessorySelectElement.classList.add(`form-input__accessory-${accessorySelectIndex}`);
+    accessorySelectElement.addEventListener("change", () =>
+        __validateInput(accessorySelectElement.value, {
+            "name" : `accessory-${accessorySelectIndex}`,
+            "type" : "select"
+        })
+    );
+
+    const accessorySelectPrice = accessorySelectWrapper.querySelector(".input-group-text__accessory-1-price");
+    accessorySelectPrice.innerHTML = ".00";
+    accessorySelectPrice.classList.remove("input-group-text__accessory-1-price");
+    accessorySelectPrice.classList.add(`input-group-text__accessory-${accessorySelectIndex}-price`);
+
+    const accessorySelectError = accessorySelectWrapper.querySelector(".form-input-error__accessory-1");
+    accessorySelectError.innerHTML = "";
+    accessorySelectError.classList.remove("form-input-error__accessory-1");
+    accessorySelectError.classList.add(`form-input-error__accessory-${accessorySelectIndex}`);
+
+    const formInputs = document.querySelector(".form-inputs");
+    formInputs.appendChild(accessorySelectWrapper);
+
+    quotationForm[`accessory-${accessorySelectIndex}`] = {
+        "input" : accessorySelectPrice,
+        "inputError" : accessorySelectError,
+        "valid" : false,
+        "value" : null
+    };
+    __insertAccessoryOptions();
+
+    if (accessorySelectIndex >= ACCESSORIES_MAX_COUNT) {
+        const addAccessoryButton = document.querySelector(".add-accessory-button");
+        addAccessoryButton.classList.add("d-none")
+    }
 }
 
 /**
