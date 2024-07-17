@@ -2,6 +2,7 @@
 
 
 const QUOTATION_FORM_STEPS_COUNT = 5;
+const ACCESSORIES_MAX_COUNT = 4;
 const QUOTATION_FORM_STEPS = [
     [
         {
@@ -32,8 +33,13 @@ const QUOTATION_FORM_STEPS = [
         },
     ],
     [
-
-    ]
+        {
+            "name" : "accessory-1",
+            "type" : "select",
+        },
+    ],
+    [],
+    []
 ]
 
 const FINISHING_TYPES = {
@@ -56,5 +62,28 @@ const FINISHING_TYPES = {
         "value" : "chemical-washing",
         "label" : "Chemical Washing",
         "price" : "39.25"
+    }
+}
+
+const ACCESSORY_TYPES = {
+    "cushion" : {
+        "value" : "cushion",
+        "label" : "Cushion",
+        "price" : "49.99"
+    },
+    "cover" : {
+        "value" : "cover",
+        "label" : "Cover",
+        "price" : "24.99"
+    },
+    "leg-pads" : {
+        "value" : "leg-pads",
+        "label" : "Leg Pads",
+        "price" : "15.00"
+    },
+    "table-runner" : {
+        "value" : "table-runner",
+        "label" : "Table Runner",
+        "price" : "29.99"
     }
 }

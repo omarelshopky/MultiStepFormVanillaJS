@@ -14,20 +14,12 @@ let formButton = document.querySelector(".form-button");
  * Functions
  */
 const attachValidationEvents = () => {
-    switch (currentStep) {
-        case 1:
-        case 2:
-        case 3:
-            QUOTATION_FORM_STEPS[currentStep - 1].forEach(formInputData => {
-                const formInput = quotationForm[formInputData.name].input;
-                formInput.addEventListener([2, 3].includes(currentStep) ? "change" : "keyup", () =>
-                    __validateInput(formInput.value, formInputData)
-                );
-            });
-            break;
-        case 4:
-            break;
-    }
+    QUOTATION_FORM_STEPS[currentStep - 1].forEach(formInputData => {
+        const formInput = quotationForm[formInputData.name].input;
+        formInput.addEventListener([2, 3].includes(currentStep) ? "change" : "keyup", () =>
+            __validateInput(formInput.value, formInputData)
+        );
+    });
 }
 
 const getQuotationFormInput = () => {
@@ -65,12 +57,21 @@ const __getNextStep = async () => {
     formStepWrapper.innerHTML = "";
     formStepWrapper.setAttribute(INCLUDE_HTML_ATTRIBUTE, `components/quotation-form-step-${currentStep}.html`);
     await includeHTML();
-    getQuotationFormInput();
-    attachValidationEvents();
+    
+    if ([2, 3].includes(currentStep)) {
+        getQuotationFormInput();
+        attachValidationEvents();
+    } else {
+        quotationForm = {};
+    }
     __toggleFormButton();
 
     if (currentStep === 2) {
         __insertFinishingOptions();
+    }
+
+    if (currentStep === 3) {
+        __insertAccessoryOptions();
     }
 }
 
@@ -156,7 +157,14 @@ const __validateSelectInput = (name, value) => {
     quotationForm[name].valid = true;
     __setInputError(name, "");
     __toggleFormButton();
-    __setTypePrice(FINISHING_TYPES[value], `input-group-text__${name}-price`);
+
+    if (name.includes("accessory")) {
+        __setTypePrice(ACCESSORY_TYPES[value], `input-group-text__${name}-price`);
+        __insertAccessoryOptions();
+    } else {
+        __setTypePrice(FINISHING_TYPES[value], `input-group-text__${name}-price`);
+        __insertFinishingOptions();
+    }
 
     return true;
 }
@@ -171,30 +179,43 @@ const __setTypePrice = (typeData, typePriceClass) => {
 }
 
 const __toggleFormButton = () => {
-    __checkFormInputsValidation();
+    validForm = Object.values(quotationForm).every(({ valid }) => valid);
     formButton.disabled = !validForm;
 }
 
-const __checkFormInputsValidation = () => {
-    validForm = true;
-
-    Object.keys(quotationForm).forEach(formInputName => {
-        validForm &= quotationForm[formInputName].valid;
-    });
+const __insertFinishingOptions = () => {
+    __insertSelectOptions(".form-input__finishing-type", FINISHING_TYPES);
 }
 
-const __insertFinishingOptions = () => {
-    const selectElements = document.querySelectorAll(".form-input__finishing-type");
+const __insertAccessoryOptions = () => {
+    __insertSelectOptions(".form-input__accessory", ACCESSORY_TYPES);
+}
+
+const __insertSelectOptions = (selectElementClass, optionsData) => {
+    const selectElements = document.querySelectorAll(selectElementClass);
+    const selectedOptions = Object.values(quotationForm).map(({ value }) => value);
 
     selectElements.forEach(selectElement => {
-        Object.keys(FINISHING_TYPES).forEach(finishingTypeKey => {
-            const optionElement = document.createElement("option");
-            optionElement.innerHTML = FINISHING_TYPES[finishingTypeKey].label;
-            optionElement.value = FINISHING_TYPES[finishingTypeKey].value;
+        const selectedOption = selectElement.value;
 
-            selectElement.appendChild(optionElement);
+        // Remove select options
+        while (selectElement.children.length > 1) {
+            selectElement.removeChild(selectElement.lastChild);
+        }
+
+        Object.keys(optionsData).forEach(optionKey => {
+            if (!selectedOptions.includes(optionKey) || selectedOption === optionKey) {
+                const optionElement = document.createElement("option");
+                optionElement.innerHTML = optionsData[optionKey].label;
+                optionElement.value = optionsData[optionKey].value;
+
+                selectElement.appendChild(optionElement);
+            }
         });
-    })
+
+        // Reset the selected option
+        selectElement.value = selectedOption;
+    });
 }
 
 /**
