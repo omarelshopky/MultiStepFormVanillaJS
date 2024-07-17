@@ -27,7 +27,22 @@ const includeHTML = async (recursiveCount = RECURSIVE_COUNT) => {
         }
     }));
 
-    if (recursiveCount > 0) {
-        await includeHTML(recursiveCount - 1);
+
+    if (recursiveCount <= 0) {
+        __regenerateScriptElements();
+
+        return;
     }
+
+    await includeHTML(recursiveCount - 1);
+}
+
+const __regenerateScriptElements = () => {
+    const scripts = document.querySelectorAll("script.regenerate-script");
+
+    scripts.forEach(oldScriptElement => {
+        const scriptElement = document.createElement("script");
+        scriptElement.setAttribute("src", oldScriptElement.src);
+        oldScriptElement.parentNode.replaceChild(scriptElement, oldScriptElement);
+    });
 }
