@@ -33,6 +33,13 @@ body {
     line-height: 1rem;
 }
 
-.input-group-text__finishing-type-price {
+.input-group-text__price {
     width: 15%;
+}
+
+.plus-icon {
+    aspect-ratio: 1;
+    width: 2rem;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
 }
