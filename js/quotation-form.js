@@ -48,7 +48,14 @@ function submitForm() {
 
     if (currentStep < QUOTATION_FORM_STEPS_COUNT) {
         __getNextStep();
+
+        return;
     }
+
+    const quotations = localStorage.getItem("quotations") ? JSON.parse(localStorage.getItem("quotations")) : [];
+    quotations.push(quotationData);
+    localStorage.setItem("quotations", JSON.stringify(quotations));
+    navigateToPage("list.html");
 }
 
 async function __getNextStep() {
