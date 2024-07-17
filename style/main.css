@@ -77,6 +77,11 @@ body {
     z-index: 2;
     overflow-y: scroll;
     transform: translateY(50vh);
+
+    @media only screen and (max-width: 880px) {
+        left: 10%;
+        width: 80%;
+    }
 }
 
 .modal.visible {
