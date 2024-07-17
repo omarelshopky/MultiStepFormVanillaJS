@@ -13,7 +13,7 @@ formButton = document.querySelector(".form-button");
 /**
  * Functions
  */
-const attachValidationEvents = () => {
+function attachValidationEvents() {
     QUOTATION_FORM_STEPS[currentStep - 1].forEach(formInputData => {
         const formInput = quotationForm[formInputData.name].input;
         formInput.addEventListener([2, 3].includes(currentStep) ? "change" : "keyup", () =>
@@ -22,7 +22,7 @@ const attachValidationEvents = () => {
     });
 }
 
-const getQuotationFormInput = () => {
+function getQuotationFormInput() {
     quotationForm = {};
 
     QUOTATION_FORM_STEPS[currentStep - 1].forEach(formInputData => {
@@ -35,7 +35,7 @@ const getQuotationFormInput = () => {
     });
 }
 
-const submitForm = () => {
+function submitForm() {
     __toggleFormButton();
 
     if (!validForm) {
@@ -51,7 +51,7 @@ const submitForm = () => {
     }
 }
 
-const __getNextStep = async () => {
+async function __getNextStep() {
     currentStep++;
     const formStepWrapper = document.querySelector(".form-step-wrapper");
     formStepWrapper.innerHTML = "";
@@ -81,7 +81,7 @@ const __getNextStep = async () => {
     }
 }
 
-const __validateInput = (value, data) => {
+function __validateInput(value, data) {
     const { name, type, min, max } = data;
 
     if (quotationForm[name].value == value) {
@@ -100,7 +100,7 @@ const __validateInput = (value, data) => {
     }
 }
 
-const __validateIntegerInput = (name, value, min, max) => {
+function __validateIntegerInput(name, value, min, max) {
     value = parseFloat(value);
 
     if (!Number.isInteger(value)) {
@@ -126,7 +126,7 @@ const __validateIntegerInput = (name, value, min, max) => {
     return true;
 }
 
-const __validateFloatInput = (name, value, min, max) => {
+function __validateFloatInput(name, value, min, max) {
     value = parseFloat(value);
 
     if (Number.isNaN(value)) {
@@ -152,7 +152,7 @@ const __validateFloatInput = (name, value, min, max) => {
     return true;
 }
 
-const __validateSelectInput = (name, value) => {
+function __validateSelectInput(name, value) {
     if (!value) {
         __setInputError(name, "Please select a type.");
         __toggleFormButton();
@@ -175,29 +175,29 @@ const __validateSelectInput = (name, value) => {
     return true;
 }
 
-const __setInputError = (name, error) => {
+function __setInputError(name, error) {
     quotationForm[name].inputError.innerHTML = error;
 }
 
-const __setTypePrice = (typeData, typePriceClass) => {
+function __setTypePrice(typeData, typePriceClass) {
     const typePriceElement = document.querySelector(`.${typePriceClass}`);
     typePriceElement.innerHTML = typeData.price;
 }
 
-const __toggleFormButton = () => {
+function __toggleFormButton() {
     validForm = Object.values(quotationForm).every(({ valid }) => valid);
     formButton.disabled = !validForm;
 }
 
-const __insertFinishingOptions = () => {
+function __insertFinishingOptions() {
     __insertSelectOptions(".form-input__finishing-type", FINISHING_TYPES);
 }
 
-const __insertAccessoryOptions = () => {
+function __insertAccessoryOptions() {
     __insertSelectOptions(".form-input__accessory", ACCESSORY_TYPES);
 }
 
-const __insertSelectOptions = (selectElementClass, optionsData) => {
+function __insertSelectOptions(selectElementClass, optionsData) {
     const selectElements = document.querySelectorAll(selectElementClass);
     const selectedOptions = Object.values(quotationForm).map(({ value }) => value);
 
@@ -224,7 +224,7 @@ const __insertSelectOptions = (selectElementClass, optionsData) => {
     });
 }
 
-const __addAccessorySelectElement = () => {
+function __addAccessorySelectElement() {
     const accessorySelectIndex = Object.keys(quotationForm).length + 1;
 
     const accessorySelectWrapperBluePrint = document.querySelector(".form-input__accessory-1");

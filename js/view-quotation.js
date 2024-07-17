@@ -4,19 +4,19 @@
 /**
  * Functions
  */
-const fillQuotationDetails = () => {
+function fillQuotationDetails() {
     __fillQuotationProductSpecsSection();
     __fillQuotationFinishingSection();
     __fillQuotationAccessorySection();
 }
 
-const __fillQuotationProductSpecsSection = () => {
+function __fillQuotationProductSpecsSection() {
     ["height", "drawers"].forEach(productSpec => {
         __setElementText(`quotation-value__${productSpec}`, quotationData[productSpec]);
     });
 }
 
-const __fillQuotationFinishingSection = () => {
+function __fillQuotationFinishingSection() {
     let finishingTypeIndex = 1;
 
     while (finishingTypeIndex <= 3) {
@@ -29,7 +29,7 @@ const __fillQuotationFinishingSection = () => {
     }
 }
 
-const __fillQuotationAccessorySection = () => {
+function __fillQuotationAccessorySection() {
     const accessoryCount = Object.keys(quotationData).filter(item => item.includes("accessory-")).length;
     const accessoryList = document.querySelector(".quotation-accessories-list");
     let accessoryIndex = 1;
@@ -46,12 +46,12 @@ const __fillQuotationAccessorySection = () => {
     }
 }
 
-const __setElementText = (elementClass, text) => {
+function __setElementText(elementClass, text) {
     const element = document.querySelector(`.${elementClass}`);
     element.innerHTML = text;
 }
 
-const __addListElement = (listParent, listClass, label, price) => {
+function __addListElement(listParent, listClass, label, price) {
     const listElement = document.createElement("li");
     listElement.classList.add("list-group-item", "d-flex", "justify-content-between");
 
