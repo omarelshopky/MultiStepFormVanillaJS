@@ -1,7 +1,7 @@
 "use strict";
 
 
-const RECURSIVE_COUNT = 1;
+const RECURSIVE_COUNT = 2;
 
 
 const includeHTML = async (recursiveCount = RECURSIVE_COUNT) => {
