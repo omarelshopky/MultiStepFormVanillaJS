@@ -55,7 +55,7 @@ function submitForm() {
     const quotations = localStorage.getItem("quotations") ? JSON.parse(localStorage.getItem("quotations")) : [];
     quotations.push(quotationData);
     localStorage.setItem("quotations", JSON.stringify(quotations));
-    navigateToPage("list.html");
+    navigateToPage("list");
 }
 
 async function __getNextStep() {
