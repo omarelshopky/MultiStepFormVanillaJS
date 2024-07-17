@@ -10,7 +10,6 @@ const PAGES_HTML_DIR_PATH = "pages/";
 const ROUTES = {
     "send" : "send-quotation.html",
     "list" : "list-quotations.html",
-    "view" : "view-quotation.html"
 };
 const DEFAULT_ROUTE = "send";
 
@@ -22,6 +21,8 @@ let quotationForm = {};
 let currentStep = 1;
 let validForm = false;
 let formButton = null;
+let modal = null;
+let overlay = null;
 
 
 document.addEventListener("DOMContentLoaded", async () => {

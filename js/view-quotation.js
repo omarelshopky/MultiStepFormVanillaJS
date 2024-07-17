@@ -5,6 +5,10 @@
  * Functions
  */
 function fillQuotationDetails() {
+    if (Object.keys(quotationData).length === 0) {
+        return;
+    }
+    
     __fillQuotationProductSpecsSection();
     __fillQuotationFinishingSection();
     __fillQuotationAccessorySection();
@@ -21,7 +25,6 @@ function __fillQuotationFinishingSection() {
 
     while (finishingTypeIndex <= 3) {
         const finishingType = quotationData[`finishing-type-${finishingTypeIndex}`];
-
         __setElementText(`quotation-value__finishing-type-${finishingTypeIndex}`, FINISHING_TYPES[finishingType].label);
         __setElementText(`quotation-value__finishing-type-${finishingTypeIndex}-price`, FINISHING_TYPES[finishingType].price + " EGP");
 
@@ -32,6 +35,7 @@ function __fillQuotationFinishingSection() {
 function __fillQuotationAccessorySection() {
     const accessoryCount = Object.keys(quotationData).filter(item => item.includes("accessory-")).length;
     const accessoryList = document.querySelector(".quotation-accessories-list");
+    accessoryList.innerHTML = "";
     let accessoryIndex = 1;
 
     while (accessoryIndex <= ACCESSORIES_MAX_COUNT) {

@@ -1,1 +1,31 @@
-List quotations
+<div class="d-flex flex-column justify-content-center align-items-center mt-5 mb-5 pt-5 pb-5" data-bs-theme="dark">
+    <h1 class="form-heading fs-1 fw-bolder mb-5 justify-self-left">
+        List Quotations
+    </h1>
+
+    <div class="table-responsive container">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Height (cm)</th>
+                <th scope="col">Drawers</th>
+                <th scope="col">Finishing</th>
+                <th scope="col">Accessories</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal d-flex flex-column justify-content-center align-items-center">
+    <button class="modal-button plus-icon btn btn-dark rounded-circle mb-3 d-flex justify-content-center align-items-center" type="button" onclick="__closeModal()">
+        x
+    </button>
+    <div class="pt-5 pb-5 h-100" include-html="components/quotation-details.html"></div>
+</div>
+<div class="overlay"></div>
+
+<script src="js/list-quotations.js" class="regenerate-script"></script>

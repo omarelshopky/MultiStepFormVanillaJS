@@ -43,3 +43,51 @@ body {
     font-size: 1.5rem;
     line-height: 1.5rem;
 }
+
+.overlay {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    opacity: 0;
+    transition: opacity .3s linear;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.overlay.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal {
+    visibility: hidden;
+    position: absolute;
+    top: 4rem;
+    left: 25%;
+    width: 50%;
+    height: 80vh;
+    background-color: #1D2024;
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity .2s linear, transform .2s linear;
+    z-index: 2;
+    overflow-y: scroll;
+    transform: translateY(50vh);
+}
+
+.modal.visible {
+    visibility: visible !important;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.modal-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2rem;
+}
