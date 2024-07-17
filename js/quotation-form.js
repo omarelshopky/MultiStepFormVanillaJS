@@ -257,6 +257,7 @@ const __addAccessorySelectElement = () => {
         "value" : null
     };
     __insertAccessoryOptions();
+    __toggleFormButton();
 
     if (accessorySelectIndex >= ACCESSORIES_MAX_COUNT) {
         const addAccessoryButton = document.querySelector(".add-accessory-button");
