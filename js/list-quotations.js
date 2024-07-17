@@ -36,7 +36,6 @@ function fillQuotationsList() {
 }
 
 function deleteQuotation(quotationIndex) {
-    console.log(quotationIndex);
     const quotations = __getQuotations();
     const newQuotations = quotations.slice(0, quotationIndex).concat(quotations.slice(quotationIndex + 1));
     localStorage.setItem("quotations", JSON.stringify(newQuotations));
